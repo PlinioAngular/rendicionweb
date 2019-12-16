@@ -1,0 +1,11 @@
+# MAKE SURE TO LEAVE THE DENY LIST AT THE TOP OF THE FILE !!!
+# BEGIN DENY LIST --
+# END DENY LIST --
+Options +FollowSymLinks
+Options -Indexes
+DirectoryIndex index.html index.php
+RewriteEngine on
+RewriteCond $1 !^(index\.php|images|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ /rendicion1/index.php/$1 [L,QSA]
