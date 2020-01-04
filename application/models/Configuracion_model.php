@@ -20,7 +20,7 @@
 
         if($this->input->post('password')==$this->input->post('password_rep')){  
             $detalles = array(
-            'user_password'=>hash("sha1",$this->input->post('password'))
+            'user_password'=>hash("sha1","123456s@731ital19*/".$this->input->post('password'))
             );
         
             if(!$this->db->table_exists('tblpersona')){ //VALIDA SI EXISTE LA TABLA

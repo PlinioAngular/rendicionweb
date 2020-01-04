@@ -13,6 +13,7 @@ class Principal_model extends CI_Model {
    $this->db->from("tbldetallecostos as dc");
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso !=',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.idresponsable',$this->session->userdata('id'));
    $query=$this->db->get();      
    return $query->row();
@@ -25,6 +26,7 @@ class Principal_model extends CI_Model {
    $this->db->where('c.egreso !=',0);
    $this->db->where('dc.estado !=',0);
    $this->db->where('dc.estado !=',2);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.idresponsable',$this->session->userdata('id'));
    $query=$this->db->get();      
    return $query->row();
@@ -36,6 +38,7 @@ class Principal_model extends CI_Model {
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso !=',0);
    $this->db->where('dc.estado',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.idresponsable',$this->session->userdata('id'));
    $query=$this->db->get();      
    return $query->row();
@@ -47,6 +50,7 @@ class Principal_model extends CI_Model {
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso !=',0);
    $this->db->where('dc.estado',2);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.idresponsable',$this->session->userdata('id'));
    $query=$this->db->get();      
    return $query->row();
@@ -57,6 +61,7 @@ class Principal_model extends CI_Model {
    $this->db->from("tbldetallecostos as dc");
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso !=',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.moneda','SOLES');
    $this->db->where('dc.fecha',date('Y-m-d'));
    return  $query=$this->db->get()->row();
@@ -67,6 +72,7 @@ class Principal_model extends CI_Model {
    $this->db->from("tbldetallecostos as dc");
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso !=',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.moneda','DOLARES');
    $this->db->where('dc.fecha',date('Y-m-d'));
    return  $query=$this->db->get()->row();
@@ -77,6 +83,7 @@ class Principal_model extends CI_Model {
    $this->db->from("tbldetallecostos as dc");
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.moneda','SOLES');
    $this->db->where('dc.fecha',date('Y-m-d'));
    return  $query=$this->db->get()->row();
@@ -87,6 +94,7 @@ class Principal_model extends CI_Model {
    $this->db->from("tbldetallecostos as dc");
    $this->db->join("tblcostos as c ","dc.idcostos=c.idcostos");
    $this->db->where('c.egreso',0);
+   $this->db->where('dc.estado !=',8);
    $this->db->where('c.moneda','DOLARES');
    $this->db->where('dc.fecha',date('Y-m-d'));
    return  $query=$this->db->get()->row();

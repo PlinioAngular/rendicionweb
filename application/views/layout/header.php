@@ -11,8 +11,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <meta name="description" content="">
   <meta name="author" content=""> 
 
-  <title>Sistema Proyectos</title>
-  <link rel="shortcut icon" href="<?php base_url()?>assets/img/logo.png" />
+  <title>Rendiciones Web</title>
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/logo.png" />
 
   <!-- Custom fonts for this template-->
   <link href="<?php echo base_url()?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -25,7 +25,6 @@ defined('BASEPATH') OR exit('No direct script access allowed');
   <link href="<?php echo base_url()?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
   <script src="<?php echo base_url()?>assets/js/jquery-3.4.1.js"></script>
   <script src="<?php echo base_url()?>assets/vendor/chart.js/Chart.js"></script>
-
 </head>
 
 <body id="page-top">
@@ -73,7 +72,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
       <?php if($this->session->userdata('id')) { ?>
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRendicion" aria-expanded="true" aria-controls="collapseRendicion">
+        <a class="nav-link collapsed" id="despliega" href="#" data-toggle="collapse" data-target="#collapseRendicion" aria-expanded="true" aria-controls="collapseRendicion">
           <i class="far fa-copy"></i>
           <span>Rendicion</span>
         </a>
@@ -206,7 +205,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </li>
 
             <!-- Nav Item - Alerts -->
-            <?php if($this->session->userdata("id")){ ?>
+            <?php if($this->session->userdata("id")=="tremulo"){ ?>
 
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -333,7 +332,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	</div>
 </html>
 <script>
-$(".dmenu").hover(function(){
-$(".despliega1").trigger('click')
+$(function(){
+var id="<?= $click; ?>";
+if(id=="1"){
+  $("#sidebarToggle").trigger('click');
+}else{
+  $("#despliega").trigger('click');
+}
 });
 </script>

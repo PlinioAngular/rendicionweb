@@ -7,7 +7,7 @@
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">Listado de pendientes a rendir</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Listado de los detalles de rendición</h6>
             </div>
             <div class="row">
               <div class="col col-sm-10"></div>                
@@ -57,6 +57,7 @@
 <script>
 $(document).ready(function () {
   var condicion="<?php echo $condicion; ?>";
+  var egreso="<?php echo $egreso->iddetalle_Costos; ?>";
  $('#dataTable').DataTable({
          "ajax":{
            "data":{condicion:condicion},
@@ -81,13 +82,67 @@ $(document).ready(function () {
          dom: 'Bfrtip',
          buttons: [  {
             extend: 'excelHtml5',
-            title: 'Detalle Rendicion',
+            title: 'Detalles de rendicion del egreso: '+egreso,
             autoFilter: true,
-            sheetName: 'Detalle Caja'
+            customize: function(xlsx) {
+                var sheet = xlsx.xl.worksheets['sheet1.xml'];
+ 
+                // Loop over the cells in column `C`
+                $('[r^="A1"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '22' );
+                    
+                });
+                $('[r^="B2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="C2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="D2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="E2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="F2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="G2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="H2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="I2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+                $('[r^="A2"]', sheet).each( function () {
+                    // Get the value
+                        $(this).attr( 's', '5' );
+                    
+                });
+            }
         },  {
                 extend: 'pdfHtml5',
                 download: 'open',
-                title:'Detalle Rendicion'
+                title:'Detalles de Rendición del egreso: '+egreso
             }
          ]
      });

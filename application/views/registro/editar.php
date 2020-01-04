@@ -67,11 +67,12 @@
 						<div class="col-sm-8"></div>				
 						<div class="col-sm-2">
 							<div class="form-group">
-                            <button id="btn-agregar" type="button" class="btn btn-secondary btn-flat btn-block"><span class="fa fa-plus"></span> Agregar Item</button></div>
-						</div>	
+                            	<button id="btn-agregar" type="button" class="btn btn-secondary btn-flat btn-block"><span class="fa fa-plus"></span> Agregar Item</button></div>
+							</div>	
 						<div class="col-sm-2">
 							<div class="form-group">
-                            <button class="btn btn-primary" type="submit" id="grabar"><span class="fas fa-save"> Guardar Rendicion</button>
+                            	<button class="btn btn-primary" type="submit" id="grabar"><span class="fas fa-save"> Guardar Rendicion</button>
+							</div>
 						</div>		
     					
 					</div>
@@ -92,16 +93,16 @@
 										<th>Cantidad</th>
 										<th>Precio</th>
 										<th>Total</th>
-										<th></th>            
+										<th>Electronico</th>										
+										<th></th>              
 									</tr>
 								</thead>
-								<tbody>
-                              
+								<tbody>                              
                                     <?php foreach($detalles_rendicion as $detalle_rendicion) { ?>
-                                    <tr id="filadatos" class="filadatos table">
-                                        <td><input type="hidden" name="iddetalle_rendicion[]" value="<?php echo $detalle_rendicion->iddetalle_rendicion; ?>"><p style="visibility:hidden;display:none;"><?=$detalle_rendicion->iddetalle_rendicion ?></p><input class="form-control form-control-sm" name="fechas[]" type="date" value="<?php echo date('Y-m-d',strtotime($detalle_rendicion->fecha)); ?>"></td>
+									<tr id="filadatos" class="filadatos table" <?php if($detalle_rendicion->id_electronico != null) { ?> style="background:rgba(150, 212, 219, 0.56);"<?php } ?>>
+                                        <td><input type="hidden" name="iddetalle_rendicion[]" value="<?php echo $detalle_rendicion->iddetalle_rendicion; ?>"><p style="visibility:hidden;display:none;"><?=$detalle_rendicion->iddetalle_rendicion ?></p><input class="form-control form-control-sm" style="width:150px;" name="fechas[]" type="date" value="<?php echo date('Y-m-d',strtotime($detalle_rendicion->fecha)); ?>"></td>
 									 <td><input name="ruc[]" class="form-control form-control-sm" style="width:110px;" value="<?php echo $detalle_rendicion->ruc; ?>" placeholder="RUC"></td>
-                                        <td> <select class="combo" style="width:120px;" id="a<?php echo $detalle_rendicion->c_electronico; ?>" onChange="mce('<?php echo $detalle_rendicion->c_electronico; ?>')" name="comprobantes[]">
+                                        <td> <select class="combo comprobante" style="width:120px;" name="comprobantes[]">
 									            <option value="<?php echo $detalle_rendicion->tipo_comprobante; ?>"><?php echo $detalle_rendicion->tipo_comprobante; ?></option>
 									            <?php foreach ($comprobantes as $comprobante) { ?>							
 									            <option value="<?php echo $comprobante->nombre;?>"><?php echo $comprobante->nombre;?></option>
@@ -110,14 +111,14 @@
                                         <td><input name="serie[]" class="form-control form-control-sm" style="width:80px;" value="<?php echo $detalle_rendicion->serie; ?>" placeholder="Serie"></td>
                                         <td><input name="numero[]" class="form-control form-control-sm" style="width:90px;" value="<?php echo $detalle_rendicion->num_comprobante; ?>" placeholder="Número"></td>
                                         
-                                        <td> <input autocomplete="off" class="form-control form-control-sm" style="width:180px;" name="detalles[]" value="<?php echo $detalle_rendicion->descripcion;?>" placeholder="Detalle"></td>
+                                        <td> <input autocomplete="off" class="form-control form-control-sm" style="width:260px;" name="detalles[]" value="<?php echo $detalle_rendicion->descripcion;?>" placeholder="Detalle"></td>
 	                                    <td> <input id="cantidad" class="form-control form-control-sm decimal" style="width:50px;" name="cantidad[]" value="<?php echo $detalle_rendicion->cantidad;?>" placeholder="Cantidad"><p hidden="hidden"><?php echo $detalle_rendicion->cantidad;?></p></td>
 	                                    <td> <input id="precio" class="form-control form-control-sm decimal" style="width:70px;" name="precio[]" value="<?php echo $detalle_rendicion->precio_unitario;?>" placeholder="Precio"><p hidden="hidden"><?php echo $detalle_rendicion->precio_unitario;?></p></td>
 	                                    <td> <p><?php echo $detalle_rendicion->precio_unitario*$detalle_rendicion->cantidad;?></p></td>
-                                        <td><div class="file-input-wrapper" id="<?php echo $detalle_rendicion->c_electronico; ?>" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">
+												<td <?php if($detalle_rendicion->id_electronico != null){ ?> ><a href="<?= base_url('comprobantes/').$detalle_rendicion->nombre.".pdf";?>">ver</a> <?php } else { ?>><?php } ?><div class="file-input-wrapper" id="<?php echo $detalle_rendicion->c_electronico; ?>" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">
 	                                    <button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>
-	                                    <input type="file" name="userfile<?php echo $detalle_rendicion->c_electronico; ?>" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="<?php echo $detalle_rendicion->c_electronico; ?>"></div></td>	  
-	                                     <td> <a href="#" id="borrar" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i> </a></td>
+	                                    <input type="file"  id="pdfce" accept="application/pdf" name="userfile<?php echo $detalle_rendicion->c_electronico; ?>" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="<?php echo $detalle_rendicion->c_electronico; ?>"></div></td>	  
+	                                     <td> <button type="button"  id="borrar" class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i> </button></td>
                                     </tr>
                                     <?php } ?>	
 								</tbody>	
@@ -254,7 +255,7 @@ $(document).ready(function() {
       var fila_nueva = $('<tr id="filadatos" class="filadatos table">'+
 	  '<td><input type="hidden" name="iddetalle_rendicion[]" value="'+id+'"><p style="visibility:hidden;display:none;">'+id+'</p> <input name="fechas[]" class="form-control form-control-sm" type="date"></td>'+
 	 '<td> <input name="ruc[]" class="form-control form-control-sm" style="width:110px;" value="" placeholder="RUC"></td>'+
-	  '<td> <select  class="combo" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
+	  '<td> <select  class="combo comprobante" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
 	'<?php foreach($comprobantes as $comprobante){ ?><option value="<?php echo $comprobante->nombre; ?>"><?php echo $comprobante->nombre; ?></option><?php } ?></select></td>'+
 	  '<td> <input class="form-control form-control-sm" style="width:80px;" name="serie[]" value="" placeholder="Serie"></td>'+
 	  '<td> <input class="form-control form-control-sm" style="width:90px;" name="numero[]" value="" placeholder="Número"></td>'+
@@ -262,7 +263,7 @@ $(document).ready(function() {
 	  '<td> <input class="form-control form-control-sm decimal" style="width:50;" id="cantidad" class="decimal" name="cantidad[]" value="0" placeholder="Cantidad"><p hidden="hidden"></p></td>'+
 	  '<td> <input class="form-control form-control-sm decimal" style="width:70px;" id="precio" class="decimal" name="precio[]" value="0" placeholder="Precio"><p hidden="hidden"></p></td>'+
 	  '<td> <p></p></td>'+  
-	  '<td><div class="file-input-wrapper" style="width: 50px;height: 30px; overflow: hidden;position: relative;">'+
+	  '<td><div class="file-input-wrapper" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
 	  '<button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>'+
 	  '<input type="file" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	  
 	  
@@ -276,7 +277,7 @@ $(document).ready(function() {
 	
 
 $('#btn-agregar').on('click', function() {
-	swal({
+	/*swal({
   		title: "¿Está segura(o) de hacer la modificación?",
   		text: "Al aceptar se agregará un registro a la rendición!",
   		icon: "warning",
@@ -289,7 +290,36 @@ $('#btn-agregar').on('click', function() {
   		} else {
     	swal("El registró no se modificó!");
   		}
-});
+});*/
+	var random=(Math.random()*100000).toFixed(0);
+		var tbody = $('#dataTable12 tbody'); 
+	var fila_contenido ;
+	//Agregar fila nueva. 
+	
+		var fila_nueva = $('<tr id="filadatos" class="filadatos table">'+
+		'<td> <input type="hidden" name="iddetalle_rendicion[]" value="0"><input required class="form-control form-control-sm" style="width:150px;" name="fechas[]" type="date" value="<?php echo date("Y-m-d"); ?>"></td>'+
+		'<td> <input required class="form-control form-control-sm numero" style="width:110px;" name="ruc[]" value="0" placeholder="RUC"></td>'+
+		'<td> <select required class="combo comprobante" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
+		'<?php foreach($comprobantes as $comprobante){ ?><option value="<?php echo $comprobante->nombre; ?>"><?php echo $comprobante->nombre; ?></option><?php } ?></select></td>'+
+		'<td> <input required class="form-control form-control-sm alfa" style="width:80px;" name="serie[]" value="0" placeholder="Serie"></td>'+
+		'<td> <input required class="form-control form-control-sm numero" style="width:90px;" name="numero[]" value="0" placeholder="Número"></td>'+
+		'<td> <input required class="form-control form-control-sm" style="width:260px;" autocomplete="off" name="detalles[]" value="0" placeholder="Detalle"></td>'+
+		'<td> <input required class="form-control form-control-sm decimal" style="width:50px;" id="cantidad" name="cantidad[]" value="1" placeholder="Cantidad"><p hidden="hidden">1</p></td>'+
+		'<td> <input required class="form-control form-control-sm decimal" style="width:70px;" id="precio" name="precio[]" value="1" placeholder="Precio"><p hidden="hidden">1</p></td>'+
+		'<td> <p>1</p></td>'+  
+		'<td><div  class="file-input-wrapper" id="'+random+'" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
+		'<button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>'+
+		'<input type="file" id="pdfce" accept="application/pdf" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	  
+		'<td> <a href="#" id="borrar" class="btn btn-danger btn-sm btn-circle"><i class="fas fa-trash"></i> </a></td>'+
+		'</tr>');
+		fila_nueva.append(fila_contenido); 
+		tbody.append(fila_nueva); 
+
+		$('.decimal').inputmask('Regex', {regex: "^[0-9]{1,15}(\\.\\d{1,2})?$"});
+		$('.numero').inputmask('Regex', {regex: "^[0-9]{11}?$"});
+		$('.alfa').inputmask('Regex', {regex: "^[0-9-a-z-A-Z]{11}?$"});
+		$('.combo').select2();
+		sumar();
 	
 
 });
@@ -312,9 +342,7 @@ function eliminar(id){
 				
 					if(status=="si")
 					{
-						opensuccess();
-
-						 //will call the function after 2 secs.
+						return true;
 					}
 					else
 					{
@@ -355,10 +383,13 @@ $(document).on("click","#borrar", function(){
   		dangerMode: true,
 		})
 		.then((willDelete) => {
-  		if (willDelete) {
-			$(this).closest("tr").remove();
-			eliminar(tr);			
-        	sumar();
+  		if (willDelete) {	
+			  var p=$(this).closest("tr").find("td:eq(0)").children("p").text();
+			$(this).closest("tr").find("td:eq(0)").find("input:hidden").val(p+"_si");	
+			$(this).closest("tr").css( "visibility", "hidden" );
+			$(this).closest("tr").css( "display", "none" );
+			$(this).closest("tr").find("td:eq(8)").children("p").text("0");
+			sumar();
   		} else {
     	swal("El registró no se modificó!");
   		}
@@ -384,6 +415,25 @@ $(function () {
         importe = cantidad * precio;
         $(this).closest("tr").find("td:eq(8)").children("p").text(importe.toFixed(2));
 		sumar();
+    });
+});
+$(function () {
+    $(document).on('change', '#pdfce', function (event) {
+		$(this).closest("tr").css( "background", "rgba(150, 212, 219, 0.56)" );
+    });
+});
+$(function () {
+    $(document).on('change', '.comprobante', function (event) {
+		if($(this).val()=="FACTURA ELECTRONICA"){
+			$(this).closest("tr").find("td:eq(9)").children("div").css( "visibility", "visible" );
+			$(this).closest("tr").find("td:eq(9)").children("a").css( "visibility", "hidden" );
+			$(this).closest("tr").find("td:eq(9)").children("a").css( "display", "block" );
+		}else{			
+			$(this).closest("tr").find("td:eq(9)").find("input:file").val("");	
+			$(this).closest("tr").css( "background", " rgba(245, 246, 244, 0.5)" );
+			$(this).closest("tr").find("td:eq(9)").children("div").css( "visibility", "hidden" );
+		}
+		
     });
 });
 });

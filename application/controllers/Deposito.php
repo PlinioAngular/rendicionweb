@@ -23,6 +23,7 @@ class Deposito extends CI_Controller {
 		$datos["por_rendir"]=$this->principal_model->por_rendir();
     $datos["web"]=$this->principal_model->web();
     $datos['condicion']=0;
+    $datos['click']=0;
     $this->load->view('layout/header',$datos);
 		$this->load->view('registro/listado',$datos);
 		$this->load->view('layout/footer');
@@ -35,6 +36,7 @@ class Deposito extends CI_Controller {
 		$datos["por_rendir"]=$this->principal_model->por_rendir();
     $datos["web"]=$this->principal_model->web();
     $datos['condicion']=2;
+    $datos['click']=0;
     $this->load->view('layout/header',$datos);
 		$this->load->view('registro/listado',$datos);
 		$this->load->view('layout/footer');
@@ -47,6 +49,7 @@ class Deposito extends CI_Controller {
 		$datos["por_rendir"]=$this->principal_model->por_rendir();
     $datos["web"]=$this->principal_model->web();
     $datos['condicion']=3;
+    $datos['click']=0;
     $this->load->view('layout/header',$datos);
 		$this->load->view('registro/listado',$datos);
 		$this->load->view('layout/footer');
@@ -61,22 +64,22 @@ class Deposito extends CI_Controller {
             $accion="";
             if($dato->estado==0){
                 $estado='<label class="form-control "style="color:white;background:red; width:180px;">Rendición Pendiente</label>';
-                $suma='<input name="select[]" class="form-control" type="checkbox" value="'.$dato->iddetalle_Costos.'_'.$dato->monto.'_'.$dato->egreso_moneda.'"  >';
-                $accion='<a href="'. base_url('deposito/registrar/').md5($dato->iddetalle_Costos).'" class="btn btn-info btn-circle btn-sm">
+                $suma='<input name="select[]" class="form-control form-control-sm" type="checkbox" value="'.$dato->iddetalle_Costos.'_'.$dato->monto.'_'.$dato->egreso_moneda.'"  >';
+                $accion='<a href="'. base_url('deposito/registrar/').md5("div.col-sm3".$dato->iddetalle_Costos."enterprise").'" class="btn btn-info btn-circle btn-sm">
                 <i class="fas fa-pen"></i></a>';
             }elseif($dato->estado==2){
                 $estado='<label class="form-control "style="color:white;background:orange; width:180px;">Validación Pendiente</label>';
                 $accion='<button aria-expanded="false" aria-haspopup="true" class="btn btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton1" type="button">Opción</button>
                 <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
-                <a class="dropdown-item" href="'.base_url().'deposito/editar/'.hash("md5",$dato->idrendicion).'" >Editar</a>
+                <a class="dropdown-item" href="'.base_url().'deposito/editar/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'" >Editar</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5($dato->idrendicion).'">Reporte</a>
+                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'">Reporte</a>
                 </div>';
             }else{
                 $estado='<label class="form-control "style="color:white;background:green; width:180px;">Rendición Válida</label>';
                 $accion='<button aria-expanded="false" aria-haspopup="true" class="btn btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton1" type="button">Opción</button>
                 <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
-                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5($dato->idrendicion).'" >Reporte</a>
+                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'" >Reporte</a>
                 <div class="dropdown-divider"></div>
                
                 </div>';
@@ -88,7 +91,9 @@ class Deposito extends CI_Controller {
             $pasar[$i][4]=$dato->datos;
             $pasar[$i][5]=$estado;
             $pasar[$i][6]=$dato->monto;
-            $pasar[$i][7]=$accion;
+            $pasar[$i][7]=$dato->gasto;
+            $pasar[$i][8]=$dato->monto - $dato->gasto;
+            $pasar[$i][9]=$accion;
             $i ++;
           }
           $respuesta= array(    
@@ -98,16 +103,30 @@ class Deposito extends CI_Controller {
     
     public function registrar($id)
 	{
-        $datos['notificaciones']=$this->deposito_model->mostrar();
-        $datos["egresos"]=$this->principal_model->egresos();
-        $datos["rendidos"]=$this->principal_model->rendidos();
-        $datos["por_rendir"]=$this->principal_model->por_rendir();
-        $datos["web"]=$this->principal_model->web();
-        $data['egreso']=$this->deposito_model->mostrar_egreso($id);
-        $data['comprobantes']=	$this->proyecto_model->mostrar_comprobante();
-        $this->load->view('layout/header',$datos);
-		    $this->load->view('registro/registrar',$data);
-		    $this->load->view('layout/footer');
+    if($data['egreso']=$this->deposito_model->mostrar_egreso($id)!=null){
+      if($this->deposito_model->mostrar_egreso_validar($id)==null){
+          $datos['notificaciones']=$this->deposito_model->mostrar();
+          $datos["egresos"]=$this->principal_model->egresos();
+          $datos["rendidos"]=$this->principal_model->rendidos();
+          $datos["por_rendir"]=$this->principal_model->por_rendir();
+          $datos["web"]=$this->principal_model->web();
+          $data['egreso']=$this->deposito_model->mostrar_egreso($id);
+          $data['comprobantes']=	$this->proyecto_model->mostrar_comprobante();
+          $datos['click']=1;
+          $this->load->view('layout/header',$datos);
+          $this->load->view('registro/registrar',$data);
+          $this->load->view('layout/footer');
+      }else{
+        $this->load->view('layout/header');
+        $this->load->view('mensajes/invalido',array("mensaje"=>"El egreso ya tiene una rendición"));
+        $this->load->view('layout/footer');
+      }
+    }else{
+      $this->load->view('layout/header');
+      $this->load->view('mensajes/invalido',array("mensaje"=>""));
+      $this->load->view('layout/footer');
+    }
+        
     }
 
     function upload(){
@@ -169,7 +188,7 @@ class Deposito extends CI_Controller {
 		{
 			if($qid = $this->deposito_model->rendicion_add())
 			{				
-				echo 'si_'.md5($qid);
+				echo 'si_'.md5("div.col-sm3".$qid."enterpriselog13");
 			}
 			else
 			{
@@ -179,17 +198,24 @@ class Deposito extends CI_Controller {
   }
   public function editar($id)
 	{
-      $datos['notificaciones']=$this->deposito_model->mostrar();
-			$datos["egresos"]=$this->principal_model->egresos();
-		  $datos["rendidos"]=$this->principal_model->rendidos();
-		  $datos["por_rendir"]=$this->principal_model->por_rendir();
-		  $datos["web"]=$this->principal_model->web();
+    if($data['egreso']=$this->deposito_model->mostrar_detalle_por_id($id)!=null){
+        $datos['notificaciones']=$this->deposito_model->mostrar();
+        $datos["egresos"]=$this->principal_model->egresos();
+        $datos["rendidos"]=$this->principal_model->rendidos();
+        $datos["por_rendir"]=$this->principal_model->por_rendir();
+        $datos["web"]=$this->principal_model->web();
         $data['egreso']=$this->deposito_model->mostrar_egreso_rendicion($id);
         $data['comprobantes']=	$this->proyecto_model->mostrar_comprobante();
         $data['detalles_rendicion']=	$this->deposito_model->mostrar_detalle_por_id($id);
+        $datos['click']=1;
         $this->load->view('layout/header',$datos);
 		    $this->load->view('registro/editar',$data);
-		    $this->load->view('layout/footer');
+        $this->load->view('layout/footer');
+      }else{
+        $this->load->view('layout/header');
+        $this->load->view('mensajes/invalido');
+        $this->load->view('layout/footer');
+      }
     }
 
     function rendicion_edit(){
@@ -211,7 +237,7 @@ class Deposito extends CI_Controller {
       {
         if($qid = $this->deposito_model->rendicion_edit())
         {				
-          echo 'si_'.md5($qid);
+          echo 'si_'.$qid;
         }
         else
         {
@@ -244,7 +270,7 @@ class Deposito extends CI_Controller {
     }
 
     function eliminar_detalle(){
-      $this->form_validation->set_rules('idrendicion','idrendicion', 'required');
+      $this->form_validation->set_rules('id_eliminar','id_eliminar', 'required');
       $idrendicion=$this->input->post('id_eliminar');
       if($this->form_validation->run() == false)
       {
@@ -286,7 +312,8 @@ class Deposito extends CI_Controller {
 				$data['comprobantes']=	$this->proyecto_model->mostrar_comprobante();
 				$data['suma']=$suma;
 				$data['moneda']=$moneda;
-				$data['seleccionados']=$detalles;
+        $data['seleccionados']=$detalles;
+        $data['click']=1;
 				$this->load->view('layout/header',$data);
 				$this->load->view('registro/rendicion_suma',$data);
 				$this->load->view('layout/footer');
@@ -345,16 +372,23 @@ class Deposito extends CI_Controller {
   }
   
   function reporte($id){
-
-      $datos['notificaciones']=$this->deposito_model->mostrar();
-			$datos["egresos"]=$this->principal_model->egresos();
-		  $datos["rendidos"]=$this->principal_model->rendidos();
-		  $datos["por_rendir"]=$this->principal_model->por_rendir();
-		  $datos["web"]=$this->principal_model->web();
+    if($data['egreso']=$this->deposito_model->mostrar_detalle_por_id($id)!=null){
+        $datos['notificaciones']=$this->deposito_model->mostrar();
+        $datos["egresos"]=$this->principal_model->egresos();
+        $datos["rendidos"]=$this->principal_model->rendidos();
+        $datos["por_rendir"]=$this->principal_model->por_rendir();
+        $datos["web"]=$this->principal_model->web();
         $data['condicion']=$id;
+        $data['egreso']=$this->deposito_model->mostrar_egreso_rendicion($id);
+        $datos['click']=0;
         $this->load->view('layout/header',$datos);
-		    $this->load->view('registro/reporte',$data);
-		    $this->load->view('layout/footer');
+		    $this->load->view('registro/reporte',$data); 
+        $this->load->view('layout/footer');
+      }else{
+        $this->load->view('layout/header');
+        $this->load->view('mensajes/invalido');
+        $this->load->view('layout/footer');
+      }
 
   }
 

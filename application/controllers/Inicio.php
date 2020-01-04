@@ -36,7 +36,7 @@ class Inicio extends CI_Controller {
 		$datos["rendidos"]=$this->principal_model->rendidos();
 		$datos["por_rendir"]=$this->principal_model->por_rendir();
 		$datos["web"]=$this->principal_model->web();	
-		
+		$datos['click']=0;
 		$this->load->view('layout/header',$datos);
 		$this->load->view('principal/principal',$datos);
 		$this->load->view('layout/footer');

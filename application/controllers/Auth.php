@@ -12,13 +12,10 @@ class Auth extends CI_Controller {
 		if ($this->session->userdata("login")) {
 			
 				redirect(base_url('inicio'));
-			
 		}
 		else{
 			$this->load->view("layout/login");
 		}
-		
-
 	}
 
 	public function login(){
@@ -31,7 +28,7 @@ class Auth extends CI_Controller {
 		$password = $this->input->get("password");
 		}
 		
-		$res = $this->Usuarios_model->login($username, $password);
+		$res = $this->Usuarios_model->login($username, "123456s@731ital19*/".$password);
 
 		if (!$res) {
 			$this->session->set_flashdata("error","El usuario y/o contraseña son incorrectos");
@@ -45,8 +42,6 @@ class Auth extends CI_Controller {
 			);
 			$this->session->set_userdata($data);
 			redirect(base_url());
-			 
-			
 		}
 	}
 

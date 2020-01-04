@@ -21,10 +21,24 @@
             var json_object = JSON.stringify(XL_row_object);
             total=JSON.parse(json_object);
             console.log(total.length);
-            for(var i=0;i<total.length -1 ;i++){
+			if(total.length==0){
+				swal(
+				'Error',
+				'La hoja seleccionada no tiene el formato correcto',
+				'error'
+				);
+			}else{
+				swal(
+				'Success',
+				'Se están subiendo '+total.length+' registros.',
+				'success'
+				);
+				for(var i=0;i<total.length;i++){
                 agregar2(total[i].Fecha,total[i].RUC,total[i].Comprobante,total[i].Serie,
                 total[i].Numero,total[i].Descripcion,total[i].Cant,total[i].Precio,total[i].Total);
             }
+			}
+           
          sumar();
         };
 
@@ -58,8 +72,15 @@
 				
 				<div class="element-box">
 				<form  id="add_rendicion" name="add_rendicion" accept-charset="utf-8" enctype="multipart/form-data" method="post">
-					<h5 class="form-header"> Añadir Registro </h5>
-					<div class="form-desc"> Ingrese los datos de rendición </div>
+					<div class="row">
+						<div class="col-sm-10">
+							<h5 class="form-header"> Añadir Registro </h5>
+							<div class="form-desc"> Ingrese los datos de rendición </div>
+						</div>
+						<div class="col-sm-2">
+							<a href="<?php echo base_url('FormatoRendicion.xlsx'); ?>"class="btn btn-success"><i class="fas fa-download fa-sm text-white-50"></i> FormatoExcel</a>
+						</div>					
+					</div>
 					<hr>
 					<div class="row">						
 						<div class="col-sm-6">
@@ -107,11 +128,16 @@
 						
 					</div>
 					<div class="row">
+						<div class="col-sm-2">
+							<div class="form-group">
+								<input class="form-control form-control-sm" id="hoja" name="hoja" type="text" placeholder="Hoja a importar">
+							</div>
+						</div>
 						<div class="col-sm-4">
 							<div class="form-group">							
 								<div class="input-group">
-  								<div class="input-group-prepend">
-   								 <span class="input-group-text" id="inputGroupFileAddon01">IMPORTAR</span>
+  									<div class="input-group-prepend">
+   								 	<span class="input-group-text" id="inputGroupFileAddon01">IMPORTAR</span>
   									</div>
   								<div class="custom-file">
     							<input id="upload" type="file"  name="files[]" class="custom-file-input" 
@@ -121,18 +147,16 @@
 								</div>
 							</div>
 						</div>	
+						<div class="col-sm-2"></div>
 						<div class="col-sm-2">
 							<div class="form-group">
-								<input class="form-control form-control-sm" id="hoja" name="hoja" type="text" placeholder="Hoja a importar">
+                            	<button id="btn-agregar" type="button" class="btn btn-secondary btn-flat btn-block"><span class="fa fa-plus"></span> Agregar Item</button>
 							</div>
-						</div>	<div class="col-sm-2"></div>
-						<div class="col-sm-2">
-							<div class="form-group">
-                            <button id="btn-agregar" type="button" class="btn btn-secondary btn-flat btn-block"><span class="fa fa-plus"></span> Agregar Item</button></div>
 						</div>	
 						<div class="col-sm-2">
 							<div class="form-group">
-                            <button class="btn btn-primary" type="submit" id="grabar"><span class="fas fa-save"> Guardar Rendicion</button>
+                            	<button class="btn btn-primary" type="submit" id="grabar"><span class="fas fa-save"> Guardar Rendicion</button>
+							</div>
 						</div>		
     					
 					</div>
@@ -239,25 +263,27 @@ $('#btn-agregar').on('click', function() {
    //Agregar fila nueva. 
    
       var fila_nueva = $('<tr id="filadatos" class="filadatos table">'+
-	  '<td> <input class="form-control form-control-sm" name="fechas[]" type="date" value="<?php echo date("Y-m-d"); ?>"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:110px;" name="ruc[]" value="0" placeholder="RUC"></td>'+
-	  '<td> <select class="combo" class="combo" id="a'+random+'" onChange="mce('+random+')" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
+	  '<td> <input required class="form-control form-control-sm" name="fechas[]" type="date" value="<?php echo date("Y-m-d"); ?>"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:110px;" name="ruc[]" value="0" placeholder="RUC"></td>'+
+	  '<td> <select required class="combo comprobante" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
 	'<?php foreach($comprobantes as $comprobante){ ?><option value="<?php echo $comprobante->nombre; ?>"><?php echo $comprobante->nombre; ?></option><?php } ?></select></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:80px;" name="serie[]" value="0" placeholder="Serie"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:90px;" name="numero[]" value="0" placeholder="Número"></td>'+
-	 '<td> <input class="form-control form-control-sm" style="width:180px;" autocomplete="off" name="detalles[]" value="" placeholder="Detalle"></td>'+
-	  '<td> <input class="form-control form-control-sm decimal" style="width:50;" id="cantidad" name="cantidad[]" value="1" placeholder="Cantidad"><p hidden="hidden">1</p></td>'+
-	  '<td> <input class="form-control form-control-sm decimal" style="width:70px;" id="precio" name="precio[]" value="'+$("#egreso").val()+'" placeholder="Precio"><p hidden="hidden">'+$("#egreso").val()+'</p></td>'+
+	  '<td> <input required class="form-control form-control-sm alfa" style="width:80px;" name="serie[]" value="0" placeholder="Serie"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:90px;" name="numero[]" value="0" placeholder="Número"></td>'+
+	 '<td> <input required class="form-control form-control-sm" style="width:180px;" autocomplete="off" name="detalles[]" value="" placeholder="Detalle"></td>'+
+	  '<td> <input required class="form-control form-control-sm decimal" style="width:50;" id="cantidad" name="cantidad[]" value="1" placeholder="Cantidad"><p hidden="hidden">1</p></td>'+
+	  '<td> <input required class="form-control form-control-sm decimal" style="width:70px;" id="precio" name="precio[]" value="'+$("#egreso").val()+'" placeholder="Precio"><p hidden="hidden">'+$("#egreso").val()+'</p></td>'+
 	  '<td> <p>'+$("#egreso").val()+'</p></td>'+  
 	  '<td><div class="file-input-wrapper" id="'+random+'" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
 	  '<button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>'+
-	  '<input type="file" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	  
+	  '<input type="file" id="pdfce" accept="application/pdf" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	  
 	  '<td> <a href="#" id="borrar" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i> </a></td>'+
 	  '</tr>');
       fila_nueva.append(fila_contenido); 
       tbody.append(fila_nueva); 
 
 	  $('.decimal').inputmask('Regex', {regex: "^[0-9]{1,15}(\\.\\d{1,2})?$"});
+	  $('.numero').inputmask('Regex', {regex: "^[0-9]{11}?$"});
+	  $('.alfa').inputmask('Regex', {regex: "^[0-9-a-z-A-Z]{11}?$"});
 	  $('.combo').select2();
 	  sumar();
 });
@@ -288,9 +314,27 @@ $(function () {
     });
 });
 });
+
+$(function () {
+    $(document).on('change', '#pdfce', function (event) {
+		$(this).closest("tr").css( "background", "rgba(150, 212, 219, 0.56)" );
+    });
+});
+$(function () {
+    $(document).on('change', '.comprobante', function (event) {
+		if($(this).val()=="FACTURA ELECTRONICA"){
+			$(this).closest("tr").find("td:eq(9)").children("div").css( "visibility", "visible" );
+		}else{			
+			$(this).closest("tr").find("td:eq(9)").find("input:file").val("");	
+			$(this).closest("tr").css( "background", " rgba(245, 246, 244, 0.5)" );
+			$(this).closest("tr").find("td:eq(9)").children("div").css( "visibility", "hidden" );
+		}
+		
+    });
+});
 function mce(id){
 	var idf="#a"+id;
-		if($(idf).val()=="FACTURA"){
+		if($(idf).val()=="FACTURA ELECTRONICA"){
 			document.getElementById(id).style.visibility = "visible";
 		}else{
 			document.getElementById(id).style.visibility = "hidden";
@@ -345,24 +389,26 @@ alert(operaciones);
    //Agregar fila nueva. 
    
       var fila_nueva = $('<tr id="filadatos" class="filadatos table">'+
-	  '<td> <input class="form-control form-control-sm" name="fechas[]" type="date" value="'+fecha+'"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:110px;" name="ruc[]" value="'+ruc+'" placeholder="RUC"></td>'+
-	  '<td> <select class="combo" id="a'+random+'" onChange="mce('+random+')"  style="width:120px;" name="comprobantes[]"><option>'+comprobante+'</option>'+
+	  '<td> <input required class="form-control form-control-sm" name="fechas[]" type="date" value="'+fecha+'"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:110px;" name="ruc[]" value="'+ruc+'" placeholder="RUC"></td>'+
+	  '<td> <select required class="combo comprobante"  style="width:120px;" name="comprobantes[]"><option>'+comprobante+'</option>'+
 	'<?php foreach($comprobantes as $comprobante){ ?><option value="<?php echo $comprobante->nombre; ?>"><?php echo $comprobante->nombre; ?></option><?php } ?></select></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:80px;" name="serie[]" value="'+serie+'" placeholder="Serie"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:90px;" name="numero[]" value="'+numero+'" placeholder="Número"></td>'+
-	 '<td> <input autocomplete="off" class="form-control form-control-sm" style="width:180px;" name="detalles[]" value="'+descripcion+'" placeholder="Detalle" ></td>'+
-	  '<td> <input autocomplete="off" id="cantidad" class="form-control form-control-sm decimal" style="width:50;" name="cantidad[]" value="'+cantidad+'" placeholder="Cantidad"><p hidden="hidden">'+cantidad+'</p></td>'+
-	  '<td> <input autocomplete="off" id="precio" class="form-control form-control-sm decimal" style="width:70;" name="precio[]" value="'+precio+'" placeholder="Precio"><p hidden="hidden">'+precio+'</p></td>'+
+	  '<td> <input required class="form-control form-control-sm alfa" style="width:80px;" name="serie[]" value="'+serie+'" placeholder="Serie"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:90px;" name="numero[]" value="'+numero+'" placeholder="Número"></td>'+
+	 '<td> <input required autocomplete="off" class="form-control form-control-sm" style="width:180px;" name="detalles[]" value="'+descripcion+'" placeholder="Detalle" ></td>'+
+	  '<td> <input required autocomplete="off" id="cantidad" class="form-control form-control-sm decimal" style="width:50;" name="cantidad[]" value="'+cantidad+'" placeholder="Cantidad"><p hidden="hidden">'+cantidad+'</p></td>'+
+	  '<td> <input required autocomplete="off" id="precio" class="form-control form-control-sm decimal" style="width:70;" name="precio[]" value="'+precio+'" placeholder="Precio"><p hidden="hidden">'+precio+'</p></td>'+
 	  '<td> <p>'+total+'</p></td>'+  
 	  '<td><div class="file-input-wrapper" id="'+random+'" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
 	  '<button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>'+
-	  '<input type="file" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	
+	  '<input type="file" id="pdfce" accept="application/pdf" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	
 	  '<td> <a href="#" id="borrar" class="btn btn-danger btn-circle"><i class="fas fa-trash"></i> </a></td>'+
 	  '</tr>');
       fila_nueva.append(fila_contenido); 
       tbody.append(fila_nueva); 
 	  $('.decimal').inputmask('Regex', {regex: "^[0-9]{1,15}(\\.\\d{1,2})?$"});
+	  $('.numero').inputmask('Regex', {regex: "^[0-9]{11}?$"});
+	  $('.alfa').inputmask('Regex', {regex: "^[0-9-a-z-A-Z]{11}?$"});
 	  $(".combo").select2();
 }
 function agregar3() {
@@ -372,25 +418,27 @@ function agregar3() {
    //Agregar fila nueva. 
    
       var fila_nueva = $('<tr id="filadatos" class="filadatos table">'+
-	  '<td> <input class="form-control form-control-sm" name="fechas[]" type="date" value="<?php echo date("Y-m-d"); ?>"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:110px;" name="ruc[]" value="0" placeholder="RUC"></td>'+
-	  '<td> <select class="combo" id="a'+random+'" onChange="mce('+random+')" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
+	  '<td> <input required class="form-control form-control-sm" name="fechas[]" type="date" value="<?php echo date("Y-m-d"); ?>"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:110px;" name="ruc[]" value="0" placeholder="RUC"></td>'+
+	  '<td> <select required class="combo comprobante" style="width:120px;" name="comprobantes[]"><option>Seleccione un comprobante</option>'+
 	'<?php foreach($comprobantes as $comprobante){ ?><option value="<?php echo $comprobante->nombre; ?>"><?php echo $comprobante->nombre; ?></option><?php } ?></select></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:80px;" name="serie[]" value="0" placeholder="Serie"></td>'+
-	  '<td> <input class="form-control form-control-sm" style="width:90px;" name="numero[]" value="0" placeholder="Número"></td>'+
-	 '<td> <input class="form-control form-control-sm" style="width:180px;" autocomplete="off" name="detalles[]" value="" placeholder="Detalle"></td>'+
-	  '<td> <input class="form-control form-control-sm decimal" style="width:50;" id="cantidad" name="cantidad[]" value="1" placeholder="Cantidad"><p hidden="hidden">1</p></td>'+
-	  '<td> <input class="form-control form-control-sm decimal" style="width:70px;" id="precio" name="precio[]" value="'+$("#egreso").val()+'" placeholder="Precio"><p hidden="hidden">'+$("#egreso").val()+'</p></td>'+
+	  '<td> <input required class="form-control form-control-sm alfa" style="width:80px;" name="serie[]" value="0" placeholder="Serie"></td>'+
+	  '<td> <input required class="form-control form-control-sm numero" style="width:90px;" name="numero[]" value="0" placeholder="Número"></td>'+
+	 '<td> <input required class="form-control form-control-sm" style="width:180px;" autocomplete="off" name="detalles[]" value="" placeholder="Detalle"></td>'+
+	  '<td> <input required class="form-control form-control-sm decimal" style="width:50;" id="cantidad" name="cantidad[]" value="1" placeholder="Cantidad"><p hidden="hidden">1</p></td>'+
+	  '<td> <input required class="form-control form-control-sm decimal" style="width:70px;" id="precio" name="precio[]" value="'+$("#egreso").val()+'" placeholder="Precio"><p hidden="hidden">'+$("#egreso").val()+'</p></td>'+
 	  '<td> <p>'+$("#egreso").val()+'</p></td>'+  
-	  '<td><p><div  class="file-input-wrapper" id="'+random+'" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
+	  '<td><div  class="file-input-wrapper" id="'+random+'" style="width: 50px;height: 30px; overflow: hidden;position: relative;visibility:hidden;">'+
 	  '<button class="btn btn-secondary" style="display: inline-block;width: 50px;height: 30px;">C.E.</button>'+
-	  '<input type="file" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div><p></td>'+	  
+	  '<input type="file" id="pdfce" accept="application/pdf" name="userfile'+random+'" style="font-size: 50px;position: absolute;top: 0;right: 0;opacity: 0;" /><input type="hidden" id="random" name="random[]" value="'+random+'"></div></td>'+	  
 	  '<td> </td>'+
 	  '</tr>');
       fila_nueva.append(fila_contenido); 
       tbody.append(fila_nueva); 
 
 	  $('.decimal').inputmask('Regex', {regex: "^[0-9]{1,15}(\\.\\d{1,2})?$"});
+	  $('.numero').inputmask('Regex', {regex: "^[0-9]{11}?$"});
+	  $('.alfa').inputmask('Regex', {regex: "^[0-9-a-z-A-Z]{11}?$"});
 	  $('.combo').select2();
 	  sumar();
 }

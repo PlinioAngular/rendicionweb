@@ -1,103 +1,248 @@
-<!DOCTYPE html>
-<html lang="en">
+<style>
+body
+{
+    background: url('<?= base_url(); ?>assets/img/bglog.png') fixed;
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+}
 
-<head>
+.wrap
+{
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    
+}
 
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+p.form-title
+{
+    font-family: 'Open Sans' , sans-serif;
+    font-size: 25px;
+    font-weight: 600;
+    text-align: center;
+    color: #FFFFFF;
+    margin-top: 5%;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
 
-  <title>Sistema Proyectos</title>
-  <link rel="shortcut icon" href="<?php base_url()?>assets/img/logo.png" />
-  <!-- Custom fonts for this template-->
-  <link href="<?php echo base_url()?>assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+form
+{
+    width: 250px;
+    margin: 0 auto;
+    background:rgba(0,0,87,0.2);
+}
 
-  <!-- Custom styles for this template-->
-  <link href="<?php echo base_url()?>assets/css/sb-admin-2.min.css" rel="stylesheet">
+form.login input[type="text"], form.login input[type="password"]
+{
+    width: 100%;
+    margin: 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #FFFFFF;
+    outline: 0;
+    font-style: italic;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #FFFFFF;
+    outline: 0;
+}
 
-</head>
+form.login input[type="submit"]
+{
+    width: 100%;
+    font-size: 18px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 16px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
 
-<body class="bg-gradient-primary">
+form.login input[type="submit"]:hover
+{
+    transition: background-color 0.5s ease;
+}
 
-  <div class="container">
+form.login .remember-forgot
+{
+    float: left;
+    width: 100%;
+    margin: 10px 0 0 0;
+}
+form.login .forgot-pass-content
+{
+    min-height: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+form.login label, form.login a
+{
+    font-size: 15px;
+    font-weight: 400;
+    color: #FFFFFF;
+}
 
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
+form.login a
+{
+    transition: color 0.5s ease;
+}
 
-      <div class="col-xl-10 col-lg-12 col-md-9">
+form.login a:hover
+{
+    color: #2ecc71;
+}
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-              <div class="col-lg-6">
-                <div class="p-5">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Bienvenido!</h1>
-                  </div>
-                  <?php if($this->session->flashdata("error")):?>
-              <div class="alert alert-danger">
-                <p><?php echo $this->session->flashdata("error")?></p>
-              </div>
-            <?php endif; ?>
-                  <form action="<?php echo base_url('Auth/login'); ?>" class="user" method="post">
-                  <input type="hidden" name="<?php echo $this->security->get_csrf_token_name(); ?>" value="<?php echo $this->security->get_csrf_hash(); ?>">
-                    <div class="form-group">
-                      <input type="text" class="form-control form-control-user" required name="username" id="username" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+.pr-wrap
+{
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    display: none;
+}
+
+.show-pass-reset
+{
+    display: block !important;
+}
+
+.pass-reset
+{
+    margin: 0 auto;
+    width: 250px;
+    position: relative;
+    margin-top: 22%;
+    z-index: 999;
+    background: #FFFFFF;
+    padding: 20px 15px;
+}
+
+.pass-reset label
+{
+    font-size: 12px;
+    font-weight: 400;
+    margin-bottom: 15px;
+}
+.contorno{
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    background:rgba(0,0,87,0.2);
+    text-align:center;
+}
+
+.pass-reset input[type="email"]
+{
+    width: 100%;
+    margin: 5px 0 0 0;
+    padding: 5px 10px;
+    background: 0;
+    border: 0;
+    border-bottom: 1px solid #000000;
+    outline: 0;
+    font-style: italic;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #000000;
+    outline: 0;
+}
+
+.pass-reset input[type="submit"]
+{
+    width: 100%;
+    border: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 10px;
+    outline: 0;
+    cursor: pointer;
+    letter-spacing: 1px;
+}
+
+.pass-reset input[type="submit"]:hover
+{
+    transition: background-color 0.5s ease;
+}
+.posted-by
+{
+    position: absolute;
+    bottom: 26px;
+    margin: 0 auto;
+    color: #FFF;
+    background-color: rgba(0, 0, 0,0);
+    padding: 10px;
+    left: 42.5%;
+}
+</style>
+<script>
+ $(document).ready(function () {
+    $('.forgot-pass').click(function(event) {
+      $(".pr-wrap").toggleClass("show-pass-reset");
+    }); 
+    
+    $('.pass-reset-submit').click(function(event) {
+      $(".pr-wrap").removeClass("show-pass-reset");
+    }); 
+});
+    </script>
+<link href="<?= base_url(); ?>assets/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="<?= base_url(); ?>assets/js/bootstrap.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<title>Rendiciones Web</title>
+  <link rel="shortcut icon" href="<?php echo base_url(); ?>assets/img/logo.png" />
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="wrap">
+                <p class="form-title">
+                    Rendiciones Web</p>
+                <form class="login" action="<?php echo base_url('Auth/login'); ?>" autocomplete="on" method="post">
+                <input name="username" type="text" placeholder="Usuario" required/>
+                <input name="password" type="password" placeholder="Contraseña" required/>
+                <input type="submit" value="Iniciar Sesión" class="btn btn-sm btn-light" />
+                <div class="remember-forgot">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" />
+                                    Recordarme
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 forgot-pass-content">
+                            <a href="javascript:void(0)" class="forgot-pass"></a>
+                        </div>
                     </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" required name="password" id="password" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label  class="custom-control-label" for="customCheck">Recordarme</label>
-                      </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary btn-user btn-block">INICIAR SESIÓN</button>
-                      
-                    <hr>
-                    <!--<a href="index.html" class="btn btn-google btn-user btn-block">
-                      <i class="fab fa-google fa-fw"></i> Login with Google
-                    </a>
-                    <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                      <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                    </a>-->
-                  </form>
-                  <hr>
-                  <!--
-                  <div class="text-center">
-                    <a class="small" href="forgot-password.html">Olvidó Contraseña?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.html">Create an Account!</a>
-                  </div>-->
                 </div>
-              </div>
+                <?php if($this->session->flashdata("error")):?>
+                <div class="">
+                 <p><?php echo $this->session->flashdata("error")?></p>
+                </div>
+                <?php endif; ?>
+                </form>
             </div>
-          </div>
         </div>
-
-      </div>
-
     </div>
-
-  </div>
-
-  <!-- Bootstrap core JavaScript-->
-  <script src="<?php echo base_url()?>assets/vendor/jquery/jquery.min.js"></script>
-  <script src="<?php echo base_url()?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-  <!-- Core plugin JavaScript-->
-  <script src="<?php echo base_url()?>assets/vendor/jquery-easing/jquery.easing.min.js"></script>
-
-  <!-- Custom scripts for all pages-->
-  <script src="<?php echo base_url()?>assets/js/sb-admin-2.min.js"></script>
-
-</body>
-
-</html>
+    <div class="posted-by"><a href="http://sistemas.sattelital.com.pe/"><img src="<?= base_url(); ?>assets/img/grupo.png" alt=""></a></div>
+</div>

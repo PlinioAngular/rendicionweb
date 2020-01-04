@@ -1,14 +1,195 @@
-<html>
-<input type="file" name="userfile" id="userfile">
-<input id="alert" type="button" value="uplcargaroad"  />
-</html>
-<script>
-  $(document).ready(function() {
-    $("#alert").on('click',function(){
-      $("input[name='userfile']").each(function() {
-    var fileName = $(this).val().split('/').pop().split('\\').pop();
-    alert(fileName);
-});
-    });
-  });
-  </script>
+<style>
+body { 
+  background: #111;
+  font-family: Avenir, Helvetica, sans-serif;
+}
+main a { text-decoration: none; }
+section {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: wrap;
+      -ms-flex-flow: wrap;
+          flex-flow: wrap;
+  font-size: 0;
+}
+
+section time {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+-webkit-flex: 1 1 14.2857%;
+      -ms-flex: 1;
+          flex: 1;
+  min-width: 14.2857%;
+  max-width: 14.2857vw;
+  position: relative;
+  font-size: 1.8vw;
+  line-height: 0;
+  -webkit-transition: .35s opacity;
+          transition: .35s opacity;
+}
+section time.blank {
+    min-height: 14vw; 
+}
+section time a { 
+    display: inline-block; 
+    width: 100%; height: 100%; 
+    position: inherit;
+    border-bottom: none;
+    outline: none;
+    }
+section time span { position: absolute; }
+span.caldate { 
+    top: 10%; left: 7px; 
+    z-index: 2;
+    }
+section time.blank span.caldate {   
+  color: #333; 
+}
+section time a span.title { 
+    width: 100%; height: 100%;
+    line-height: 1.1;
+    left: 0; top: 0; padding-left: 5%;
+    padding-right: 5%;
+    padding-top: 20%; opacity: 0;
+    -webkit-transition: .4s opacity;
+    transition: .4s opacity;
+}
+section time:hover a span.title { 
+    background: rgba(0,0,0,0.8);
+    opacity: 1;
+}
+section time a:hover {
+    border-bottom: none;
+}
+time:not(.blank) span { 
+    color: #fff; text-shadow: 1px 1px 1px rgba(0,0,0,0.8);
+}
+section time a img { width: 100%; }
+
+.hidden { opacity: 0; }
+
+@media all and (max-width: 950px) {
+    section time.blank { display: none; }
+    section time { 
+        min-width: 20%;
+        max-height: 20vw;
+        max-width: 20vw;
+        font-size: 3vw;
+    }
+}
+@media all and (max-width: 750px) {
+    section time { 
+        min-width: 33%;
+        max-height: 33vw;
+        font-size: 5vw;
+    }
+}
+@media all and (max-width: 450px) {
+    section time { 
+        min-width: 50%;
+        max-height: 50vw;
+        font-size: 5vw;
+    }
+}
+</style>
+<main>
+<section>
+ <time datetime="2015-07-26" class="blank"><span class="caldate">26</span></time>
+ <time datetime="2015-07-27" class="hidden">
+  <a href="http://thenewcode.com/1054/SVG-Meetup-Presentation-Interactive-Imagemaps"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/svg-meetup-thumb.png" alt="SVG Meetup Presentation: Interactive Imagemaps" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/svg-meetup-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/svg-meetup-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/svg-meetup-2x.png 125w">
+   <span
+   class="caldate">27</span><span class="title">Interactive Imagemaps Presentation</span></a>
+ </time>
+ <time datetime="2015-07-28" class="hidden">
+  <a href="http://thenewcode.com/1055/12-Palette-Extractors-and-Resources-for-Site-Color-Inspiration"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peacock-thumb.jpg" alt="12 Palette Extractors and Resources for Site Color Inspiration" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peacock-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peacock-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peacock-2x.jpg 125w">
+   <span
+   class="caldate">28</span><span class="title">Palette Extractors & Resources</span></a>
+ </time>
+ <time datetime="2015-07-29" class="blank"><span class="caldate">29</span></time>
+ <time datetime="2015-07-30" class="hidden">
+  <a href="http://thenewcode.com/1056/Better-Diagrams-with-SVG-and-Blend-Modes"><img src="http://thenewcode.com/assets/svg/venn.svg" alt><span class="caldate">30</span><span class="title"> SVG Diagrams w/ Blend Modes</span></a>
+ </time>
+ <time datetime="2015-07-31" class="blank"><span class="caldate">31</span></time>
+ <time datetime="2015-08-01" class="blank"><span class="caldate">01</span></time>
+ <time datetime="2015-08-02" class="hidden">
+  <a href="http://thenewcode.com/1057/SVG-Patterns-of-Japan"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/waves-thumb.png" alt="SVG Patterns of Japan" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/waves-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/waves-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/waves-2x.png 125w">
+    
+   <span
+   class="caldate">02</span><span class="title">SVG Patterns of Japan</span></a>
+ </time>
+ <time datetime="2015-08-03" class="hidden">
+  <a href="http://thenewcode.com/1058/Overlapping-Action-with-CSS-Animation"><img src="http://thenewcode.com/assets/svg/redbars.svg" alt><span class="caldate">03</span><span class="title">CSS Overlapping Animation</span></a>
+ </time>
+ <time datetime="2015-08-04" class="blank"><span class="caldate">04</span></time>
+ <time datetime="2015-08-05" class="blank"><span class="caldate">05</span></time>
+ <time datetime="2015-08-06" class="hidden">
+  <a href="http://thenewcode.com/1059/Responsive-Image-Hinting-Using-the-w-Descriptor"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/toubana-diver-thumb.jpg" alt="Responsive Image Hinting: Using the w Descriptor" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/toubana-diver-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/toubana-diver-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/toubana-diver-2x.jpg 125w">
+   <span
+   class="caldate">06</span><span class="title">Using the w Descriptor</span></a>
+ </time>
+ <time datetime="2015-08-07" class="blank"><span class="caldate">07</span></time>
+ <time datetime="2015-08-08" class="blank"><span class="caldate">08</span></time>
+ <time datetime="2015-08-09" class="hidden">
+  <a href="http://thenewcode.com/1060/SVG-Patterns-of-Africa"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/african-patterns-thumb.png" alt="SVG Patterns of Africa" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/african-patterns-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/african-patterns-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/african-patterns-2x-thumb.png 125w">
+   <span
+   class="caldate">09</span><span class="title">SVG African Patterns</span></a>
+ </time>
+ <time datetime="2015-08-10" class="hidden">
+  <a href="http://thenewcode.com/1061/Bokeh-Backgrounds-with-SVG-and-JS"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bokeh-thumb.png" alt="Bokeh Backgrounds with SVG and JS" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bokeh-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bokeh-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bokeh-2x.png 125w">
+   <span
+   class="caldate">10</span><span class="title">SVG Bokeh Backgrounds</span></a>
+ </time>
+ <time datetime="2015-08-11" class="blank"><span class="caldate">11</span></time>
+ <time datetime="2015-08-12" class="blank"><span class="caldate">12</span></time>
+ <time datetime="2015-08-13" class="hidden">
+  <a href="http://thenewcode.com/1062/Scribble-Image-Reveal-with-SVG-and-Blend-Modes"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/olga-thumb.jpg" alt="“Scribble” Image Reveal with SVG and Blend Modes" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/olga-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/olga-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/olga-2x.jpg 125w">
+   <span
+   class="caldate">13</span><span class="title">“Scribble” Image Reveal</span></a>
+ </time>
+ <time datetime="2015-08-14" class="blank"><span class="caldate">14</span></time>
+ <time datetime="2015-08-15" class="blank"><span class="caldate">15</span></time>
+ <time datetime="2015-08-16" class="blank"><span class="caldate">16</span></time>
+ <time datetime="2015-08-17" class="hidden">
+  <a href="http://thenewcode.com/1063/Techniques-and-Treatments-for-Background-Retina-Images"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/birds-on-wire-thumb.png" alt="Techniques and Treatments for Background Retina Images" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/birds-on-wire-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/birds-on-wire-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/birds-on-wire-2x.png 125w">
+   <span
+   class="caldate">17</span><span class="title">Background Retina Images</span></a>
+ </time>
+ <time datetime="2015-08-18" class="blank"><span class="caldate">18</span></time>
+ <time datetime="2015-08-19" class="hidden">
+  <a href="http://thenewcode.com/1064/Classical-Greek-Geometric-Borders-In-SVG"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/greek-geometrics-thumb.png" alt="Classical Greek Geometric Borders In SVG" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/greek-geometrics-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/greek-geometrics-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/greek-geometrics-2x.png 125w">
+   <span
+   class="caldate">19</span><span class="title">SVG Greek Geometric Borders</span></a>
+ </time>
+ <time datetime="2015-08-20" class="blank"><span class="caldate">20</span></time>
+ <time datetime="2015-08-21" class="blank"><span class="caldate">21</span></time>
+ <time datetime="2015-08-22" class="blank"><span class="caldate">22</span></time>
+ <time datetime="2015-08-23" class="hidden">
+  <a href="http://thenewcode.com/1065/Better-Image-Borders-with-Blend-Modes"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peugot-thumb.jpg" alt="Better Image Borders with Blend Modes" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peugot-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peugot-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/peugot-2x.jpg 125w">
+   <span
+   class="caldate">23</span><span class="title">Blend Mode Borders</span></a>
+ </time>
+ <time datetime="2015-08-24" class="hidden">
+  <a href="http://thenewcode.com/1/Welcome-to-The-New-Code"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/the-new-code-thumb.png" alt="Welcome to The New Code" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/the-new-code-thumb.png 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/the-new-code-2x-thumb.png 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/the-new-code-square-2x.png 125w">
+   <span
+   class="caldate">24</span><span class="title">The New Code</span></a>
+ </time>
+ <time datetime="2015-08-25" class="blank"><span class="caldate">25</span></time>
+ <time datetime="2015-08-26" class="hidden">
+  <a href="http://thenewcode.com/2/Precognitive-Pages-Using-Resource-Hints-to-Accelerate-Site-Performance"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/alexander-thumb.jpg" alt="Precognitive Pages: Using Resource Hints to Accelerate Site Performance" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/alexander-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/alexander-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/alexander-2x.jpg 125w">
+   <span
+   class="caldate">26</span><span class="title">Using Resource Hints</span></a>
+ </time>
+ <time datetime="2015-08-27" class="blank"><span class="caldate">27</span></time>
+ <time datetime="2015-08-28" class="hidden">
+  <a href="http://thenewcode.com/4/In-Other-Words-Using-the-blockquote-cite-and-q-elements"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bertrand-russell-thumb.jpg" alt="In Other Words: Using the blockquote, cite and q elements" srcset="https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bertrand-russell-thumb.jpg 250w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bertrand-russell-2x-thumb.jpg 500w, https://s3-us-west-2.amazonaws.com/s.cdpn.io/4273/bertrand-russell-2x-thumb.jpg 125w">
+   <span
+   class="caldate">28</span><span class="title">blockquote, cite and q</span></a>
+ </time>
+ <time datetime="2015-08-29" class="blank"><span class="caldate">29</span></time>
+ <time datetime="2015-08-30" class="blank"><span class="caldate">30</span></time>
+ <time datetime="2015-08-31" class="blank"><span class="caldate">31</span></time>
+ <time datetime="2015-09-01" class="blank"><span class="caldate">01</span></time>
+</section>
+</main>
