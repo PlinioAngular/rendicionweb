@@ -1,7 +1,7 @@
 <style>
 body
 {
-    background: url('<?= base_url(); ?>assets/img/bglog.png') fixed;
+    background: url('<?= base_url(); ?>assets/img/bglog1.png') fixed;
     background-size: cover;
     padding: 0;
     margin: 0;
@@ -13,7 +13,7 @@ body
     height: 100%;
     min-height: 100%;
     position: absolute;
-    top: 0;
+    top: 45px;
     left: 0;
     z-index: 99;
     
@@ -33,7 +33,7 @@ p.form-title
 
 form
 {
-    width: 250px;
+    width: 300px;
     margin: 0 auto;
     background:rgba(0,0,87,0.2);
 }
@@ -185,7 +185,6 @@ form.login a:hover
 .posted-by
 {
     position: absolute;
-    bottom: 26px;
     margin: 0 auto;
     color: #FFF;
     background-color: rgba(0, 0, 0,0);

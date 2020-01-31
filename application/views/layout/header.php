@@ -23,7 +23,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
   <!-- Custom styles for this page -->
   <link href="<?php echo base_url()?>assets/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-  <script src="<?php echo base_url()?>assets/js/jquery-3.4.1.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="<?php echo base_url()?>assets/vendor/chart.js/Chart.js"></script>
 </head>
 
@@ -40,7 +40,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3"><?php echo $this->session->userdata('nombre'); ?> </div>
+        <div class="sidebar-brand-text mx-2"><?php echo $this->session->userdata('nombre'); ?> </div>
       </a>
 
       <!-- Divider -->

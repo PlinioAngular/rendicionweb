@@ -57,43 +57,48 @@ class Deposito extends CI_Controller {
     public function ajax(){ 
 		$data= $this->deposito_model->mostrar();
 		$pasar=array();
-		$i=0;
+		$i=0;$j=1;
 		foreach($data as $dato){
             $estado="";
             $suma="";
             $accion="";
             if($dato->estado==0){
-                $estado='<label class="form-control "style="color:white;background:red; width:180px;">Rendición Pendiente</label>';
+                $estado='<label class="form-control "style="color:white;background:red; width:100px;">Pendiente</label>';
                 $suma='<input name="select[]" class="form-control form-control-sm" type="checkbox" value="'.$dato->iddetalle_Costos.'_'.$dato->monto.'_'.$dato->egreso_moneda.'"  >';
                 $accion='<a href="'. base_url('deposito/registrar/').md5("div.col-sm3".$dato->iddetalle_Costos."enterprise").'" class="btn btn-info btn-circle btn-sm">
                 <i class="fas fa-pen"></i></a>';
             }elseif($dato->estado==2){
-                $estado='<label class="form-control "style="color:white;background:orange; width:180px;">Validación Pendiente</label>';
+                $estado='<label class="form-control "style="color:white;background:orange; width:90px;">x Validar</label>';
                 $accion='<button aria-expanded="false" aria-haspopup="true" class="btn btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton1" type="button">Opción</button>
                 <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
                 <a class="dropdown-item" href="'.base_url().'deposito/editar/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'" >Editar</a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'">Reporte</a>
+                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'">Detalles de Rendición</a>
                 </div>';
             }else{
-                $estado='<label class="form-control "style="color:white;background:green; width:180px;">Rendición Válida</label>';
+                $estado='<label class="form-control "style="color:white;background:green; width:100px;">Validado</label>';
                 $accion='<button aria-expanded="false" aria-haspopup="true" class="btn btn dropdown-toggle" data-toggle="dropdown" id="dropdownMenuButton1" type="button">Opción</button>
                 <div aria-labelledby="dropdownMenuButton1" class="dropdown-menu">
-                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'" >Reporte</a>
+                <a class="dropdown-item" href="'.base_url().'deposito/reporte/'.md5("div.col-sm3".$dato->idrendicion."enterpriselog13").'" >Detalles de Rendición</a>
                 <div class="dropdown-divider"></div>
                
                 </div>';
             }   
             $pasar[$i][0]=$dato->iddetalle_Costos;
-            $pasar[$i][1]=$suma;
-            $pasar[$i][2]=date('Y-m-d',strtotime($dato->fecha));            
-            $pasar[$i][3]=$dato->detalle;
-            $pasar[$i][4]=$dato->datos;
-            $pasar[$i][5]=$estado;
-            $pasar[$i][6]=$dato->monto;
-            $pasar[$i][7]=$dato->gasto;
-            $pasar[$i][8]=$dato->monto - $dato->gasto;
-            $pasar[$i][9]=$accion;
+            if($dato->estado==0){
+              $pasar[$i][1]=$suma;
+              $j=2;
+            }
+            
+            
+            $pasar[$i][$j]=date('Y-m-d',strtotime($dato->fecha));            
+            $pasar[$i][$j+1]='<a href="#" title="'.$dato->detalle.'">'.$dato->detalle.'</a>';
+            $pasar[$i][$j+2]=$dato->datos;
+            $pasar[$i][$j+3]=$estado;
+            $pasar[$i][$j+4]=$dato->monto;
+            $pasar[$i][$j+5]=$dato->gasto;
+            $pasar[$i][$j+6]='<p style="width:80px;">'.($dato->monto - $dato->gasto).'</p>';
+            $pasar[$i][$j+7]=$accion;
             $i ++;
           }
           $respuesta= array(    
@@ -345,7 +350,7 @@ class Deposito extends CI_Controller {
 		}
 		else{
 			$fin=0;
-			$detalles=$this->input->post('iddetalle_costos');
+			$detalles=$this->input->post('id_detalle_caja');
 			$filas=$this->input->post('precio');			
 			$detalle=explode ("_", $detalles); 
 			$datos=round((count($filas))/(count($detalle)-1));

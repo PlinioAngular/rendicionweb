@@ -28,7 +28,7 @@ class Configuracion extends CI_Controller {
  		$this->load->library(array('session','form_validation','encryption'));
  		$this->load->helper(array('url','form'));
 		 $this->load->database('default');
-		 $this->encryption->initialize(array('driver' => 'mcrypt'));
+		// $this->encryption->initialize(array('driver' => 'mcrypt'));
     }
 
     function index(){

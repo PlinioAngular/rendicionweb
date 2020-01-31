@@ -14,7 +14,7 @@ class Auth extends CI_Controller {
 				redirect(base_url('inicio'));
 		}
 		else{
-			$this->load->view("layout/login");
+			$this->load->view("login/index");
 		}
 	}
 

@@ -1,8 +1,17 @@
-
+<?php 
+$detalle=""; 
+if($condicion==0){
+$detalle="La presente tabla muestra los egresos a rendir de un personal con opción de hacer la rendicion de manera individual o en sumatoria.";
+}else if($condicion==2){
+$detalle="La presente tabla muestra los egresos con rendiciones pendientes de validación con opción a editar o ver los detalles.";
+}else{
+  $detalle="La presente tabla muestra los egresos con rendiciones validadas con opción a ver los detalles.";
+}
+ ?>
 <div class="container-fluid">
     <!-- Page Heading -->
     <h1 class="h3 mb-2 text-gray-800">Listado de Egresos </h1>
-    <p class="mb-4">La presente tabla muestra los egresos a rendir de un personal con opción de hacer la rendicion de manera individual o en sumatoria|Editar Rendiciones|Generar Reporte Excel.<a target="_blank" href="https://datatables.net"></a>.</p>
+    <p class="mb-4"><?= $detalle; ?><a target="_blank" href="https://datatables.net"></a></p>
 
     <!-- DataTales Example -->
     <div class="card shadow mb-4">
@@ -29,7 +38,8 @@
                   <thead>
                     <tr>
                       <th>#</th>
-                      <th>Suma</th>
+                      <?php if($condicion==0) { ?>
+                      <th>Suma</th><?php } ?>
                       <th>Fecha</th>
                       <th>Detalle</th>
                       <th>Beneficiario</th>                        
@@ -43,7 +53,8 @@
                   <tfoot>
                     <tr>
                       <th>#</th>
-                      <th>Suma</th>
+                      <?php if($condicion==0) { ?>
+                      <th>Suma</th><?php } ?>
                       <th>Fecha</th>
                       <th>Detalle</th> 
                       <th>Beneficiario</th>                        

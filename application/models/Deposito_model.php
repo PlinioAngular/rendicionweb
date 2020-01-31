@@ -372,10 +372,11 @@
       }
       $descripcion=$this->input->post('detalles');
      $detalle = array(
-        'id_registra' =>$this->session->userdata('id'),
+        'idusuario' =>$this->session->userdata('id'),
         'gasto' => $suma,
         'iddetalle_Costos' => $id_detalle,
-        'fecha_registro' => date('Y-m-d\TH:i:s.u')
+        'fecha' => date('Y-m-d\TH:i:s.u'),
+        'idcostos'=>1000
      );
    
      if(!$this->db->table_exists('tblrendicion')){ //VALIDA SI EXISTE LA TABLA
@@ -400,12 +401,12 @@
          'idrendicion' => $idrendicion,
          'fecha' => $fecha[$i],
          'ruc' => $ruc[$i],
-         'idcomprobante' => $comprobante[$i],
+         'tipo_comprobante' => $comprobante[$i],
          'serie' => $serie[$i],
          'num_comprobante' => $numero[$i],
          'descripcion' => $descripcion[$i],
          'cantidad' => $cantidad[$i],
-         'precio' => $precio[$i]
+         'precio_unitario' => $precio[$i]
       );
    
       if(!$this->db->table_exists('tbldetallerendicion')){ //VALIDA SI EXISTE LA TABLA
